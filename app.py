@@ -30,14 +30,11 @@ def add():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # Verificar si el título ya existe
     cursor.execute("SELECT * FROM creacion WHERE titulo = %s", (titulo,))
     if cursor.fetchone():
         flash("Error: Ya existe un artículo con ese título", "danger")
         conn.close()
         return redirect('/')
-
-    # Insertar el nuevo artículo
     cursor.execute("INSERT INTO creacion (titulo, introduccion, autores, fecha) VALUES (%s, %s, %s, %s)", 
                    (titulo, introduccion, autores, fecha))
     conn.commit()
